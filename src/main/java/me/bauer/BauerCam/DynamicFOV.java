@@ -32,16 +32,16 @@ public final class DynamicFOV {
 	}
 
 	public static void reset() {
-		RenderingConfig.fov = defaultFOV;
+		RenderingConfig.fov = defaultFOV / 2;
 	}
 
 	public static void set(final float fov) {
-		RenderingConfig.fov = fov;
+		RenderingConfig.fov = fov / 2;
 		verify();
 	}
 
 	public static float get() {
-		return RenderingConfig.fov;
+		return RenderingConfig.fov * 2;
 	}
 
 	private static void verify() {

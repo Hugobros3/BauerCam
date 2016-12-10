@@ -69,6 +69,9 @@ public final class EventListener implements Listener, IPathChangeListener {
 
 	@EventHandler
 	public void onRender(final WorldPostRenderingEvent e) {
+		PathHandler.tick();
+		
+		
 		if (this.previewPoints == null || !PathHandler.showPreview()) {
 			return;
 		}

@@ -26,7 +26,7 @@ public final class CamCommand implements CommandHandler {
 	@Override
 	public boolean handleCommand(CommandEmitter emitter, Command command, String[] args) {
 		try {
-			if (emitter != Utils.client.getClientSideController().getControlledEntity()) {
+			if (emitter != Utils.client) {
 				throw new CommandException(BauerCamPlugin.commandHasToBePlayer.toString(), new Object[0]);
 
 			}

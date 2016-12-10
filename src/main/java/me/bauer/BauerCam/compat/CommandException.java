@@ -6,7 +6,7 @@ public class CommandException extends Exception
 	
 	public CommandException(String complaint, Object[] objects)
 	{
-		
+		this.complaint = complaint;
 	}
 
 	public String getMessage()

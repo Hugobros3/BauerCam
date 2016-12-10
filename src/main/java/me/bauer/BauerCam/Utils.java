@@ -104,7 +104,9 @@ public final class Utils {
 		if(entity instanceof EntityRotateable)
 		{
 			EntityRotateable erot = (EntityRotateable)entity;
-			erot.getEntityRotationComponent().setRotation(pos.yaw, pos.pitch);
+			
+			System.out.println(pos.yaw+":"+pos.pitch);
+			erot.getEntityRotationComponent().setRotation(180+pos.yaw, pos.pitch);
 		}
 		//entity.setLocationAndAngles(pos.x, pos.y, pos.z, pos.yaw, pos.pitch);
 		

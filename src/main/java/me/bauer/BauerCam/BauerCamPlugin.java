@@ -44,6 +44,8 @@ public class BauerCamPlugin extends ClientPlugin {
 
 		bauercamDirectory = new File(GameDirectory.getGameFolderPath()+"/bauercam/");
 		bauercamDirectory.mkdirs();
+		
+		Utils.setup(this);
 	}
 
 	@Override

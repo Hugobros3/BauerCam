@@ -22,6 +22,7 @@ public final class ActiveInterpolatorPath extends ActivePath {
 
 		final Position pos = this.interpolator.getPoint(this.currentIteration / (double) this.iterations);
 
+		//System.out.println("ticking"+currentIteration);
 		Utils.teleport(pos, false);
 
 		if (this.currentIteration >= this.iterations) {
