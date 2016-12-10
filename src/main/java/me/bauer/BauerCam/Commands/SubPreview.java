@@ -1,9 +1,9 @@
 package me.bauer.BauerCam.Commands;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
-import net.minecraft.command.CommandException;
+import me.bauer.BauerCam.compat.CommandException;
 
 public class SubPreview implements ISubCommand {
 
@@ -11,9 +11,9 @@ public class SubPreview implements ISubCommand {
 	public void execute(final String[] args) throws CommandException {
 		PathHandler.switchPreview();
 		if (PathHandler.showPreview()) {
-			Utils.sendInformation(Main.renderPreviewOn.toString());
+			Utils.sendInformation(BauerCamPlugin.renderPreviewOn.toString());
 		} else {
-			Utils.sendInformation(Main.renderPreviewOff.toString());
+			Utils.sendInformation(BauerCamPlugin.renderPreviewOff.toString());
 		}
 	}
 

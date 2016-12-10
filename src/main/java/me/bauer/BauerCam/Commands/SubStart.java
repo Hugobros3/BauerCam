@@ -1,9 +1,9 @@
 package me.bauer.BauerCam.Commands;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
-import net.minecraft.command.CommandException;
+import me.bauer.BauerCam.compat.CommandException;
 
 public class SubStart implements ISubCommand {
 
@@ -15,14 +15,14 @@ public class SubStart implements ISubCommand {
 
 		final long frames = Utils.parseSafely(args[1], 0);
 		if (frames <= 0) {
-			throw new CommandException(Main.commandInvalidFrames.toString(), new Object[0]);
+			throw new CommandException(BauerCamPlugin.commandInvalidFrames.toString(), new Object[0]);
 		}
 		if (PathHandler.getWaypointSize() <= 1) {
-			throw new CommandException(Main.commandAtLeastTwoPoints.toString(), new Object[0]);
+			throw new CommandException(BauerCamPlugin.commandAtLeastTwoPoints.toString(), new Object[0]);
 		}
 
 		PathHandler.startTravelling(frames);
-		Utils.sendInformation(Main.pathStarted.toString());
+		Utils.sendInformation(BauerCamPlugin.pathStarted.toString());
 	}
 
 	@Override

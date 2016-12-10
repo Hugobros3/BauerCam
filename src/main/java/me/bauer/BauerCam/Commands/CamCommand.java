@@ -1,27 +1,21 @@
 package me.bauer.BauerCam.Commands;
 
-import me.bauer.BauerCam.Main;
+import io.xol.chunkstories.api.plugin.commands.Command;
+import io.xol.chunkstories.api.plugin.commands.CommandEmitter;
+import io.xol.chunkstories.api.plugin.commands.CommandHandler;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
+import me.bauer.BauerCam.compat.CommandException;
 
-public final class CamCommand extends CommandBase {
+public final class CamCommand implements CommandHandler {
 
 	private static final ISubCommand[] commands = { new SubStart(), new SubStop(), new SubGoto(), new SubInsert(),
 			new SubRemove(), new SubReplace(), new SubUndo(), new SubClear(), new SubSave(), new SubLoad(),
 			new SubTarget(), new SubCircle(), new SubPreview() };
 
-	@Override
-	public String getCommandName() {
-		return "cam";
-	}
-
-	@Override
-	public String getCommandUsage(final ICommandSender sender) {
+	public String getCommandUsage(final CommandEmitter sender) {
 		final StringBuilder s = new StringBuilder();
-		s.append(Main.commands);
+		s.append(BauerCamPlugin.commands);
 		for (final ISubCommand c : commands) {
 			s.append("\n");
 			s.append(c.getDescription());
@@ -30,30 +24,30 @@ public final class CamCommand extends CommandBase {
 	}
 
 	@Override
-	public int getRequiredPermissionLevel() {
-		return 0;
-	}
+	public boolean handleCommand(CommandEmitter emitter, Command command, String[] args) {
+		try {
+			if (emitter != Utils.client.getClientSideController().getControlledEntity()) {
+				throw new CommandException(BauerCamPlugin.commandHasToBePlayer.toString(), new Object[0]);
 
-	@Override
-	public void execute(final MinecraftServer server, final ICommandSender sender, final String[] args)
-			throws CommandException {
-		if (sender != Utils.mc.thePlayer) {
-			throw new CommandException(Main.commandHasToBePlayer.toString(), new Object[0]);
-		}
-		if (args.length == 0) {
-			throw new CommandException(getCommandUsage(sender), new Object[0]);
-		}
-
-		final String base = args[0].toLowerCase();
-
-		for (final ISubCommand c : commands) {
-			if (c.getBase().equals(base)) {
-				c.execute(args);
-				return;
 			}
-		}
+			if (args.length == 0) {
+				throw new CommandException(getCommandUsage(emitter), new Object[0]);
+			}
 
-		throw new CommandException(getCommandUsage(sender), new Object[0]);
+			final String base = args[0].toLowerCase();
+
+			for (final ISubCommand c : commands) {
+				if (c.getBase().equals(base)) {
+					c.execute(args);
+					return true;
+				}
+			}
+
+			throw new CommandException(getCommandUsage(emitter), new Object[0]);
+		} catch (CommandException e) {
+			emitter.sendMessage(e.getMessage());
+			return true;
+		}
 	}
 
 }

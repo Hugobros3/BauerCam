@@ -1,0 +1,7 @@
+keyBind bauercam.key.addPoint P
+keyBind bauercam.key.fovHigh O
+keyBind bauercam.key.fovLow U
+keyBind bauercam.key.fovReset I
+keyBind bauercam.key.clockwise L
+keyBind bauercam.key.counterClockwise J
+keyBind bauercam.key.reset K

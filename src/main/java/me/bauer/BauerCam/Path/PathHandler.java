@@ -42,7 +42,7 @@ public final class PathHandler {
 	// Travel control
 
 	public static void startTravelling(final long frames) {
-		final long iterations = frames * Utils.renderPhases;
+		final long iterations = frames;// * Utils.renderPhases;
 		final Interpolator interpolator = target == null
 				? new Interpolator(getWaypoints(), CubicInterpolator.instance, CubicInterpolator.instance,
 						CubicInterpolator.instance)

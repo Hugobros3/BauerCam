@@ -1,6 +1,6 @@
 package me.bauer.BauerCam.Commands;
 
-import net.minecraft.command.CommandException;
+import me.bauer.BauerCam.compat.CommandException;
 
 public interface ISubCommand {
 

@@ -1,0 +1,7 @@
+name: BauerCam
+authors: Gregosteros, Gobrosse
+version: 1.12
+main: xyz.chunkstories.coreplugin.CorePlugin
+type: client
+
+command: cam

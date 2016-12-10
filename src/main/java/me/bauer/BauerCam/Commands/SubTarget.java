@@ -1,11 +1,12 @@
 package me.bauer.BauerCam.Commands;
 
-import me.bauer.BauerCam.Main;
+import io.xol.chunkstories.api.Location;
+import io.xol.chunkstories.api.entity.interfaces.EntityControllable;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Vector3D;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.command.CommandException;
+import me.bauer.BauerCam.compat.CommandException;
 
 public class SubTarget implements ISubCommand {
 
@@ -18,13 +19,14 @@ public class SubTarget implements ISubCommand {
 		final String op = args[1].toLowerCase();
 
 		if ("set".equals(op)) {
-			final EntityPlayerSP player = Utils.mc.thePlayer;
-			final Vector3D target = new Vector3D(player.posX, player.posY, player.posZ);
+			final EntityControllable player = Utils.client.getClientSideController().getControlledEntity();
+			Location loc = player.getLocation();
+			final Vector3D target = new Vector3D(loc.getX(), loc.getY(), loc.getZ());
 			PathHandler.setTarget(target);
-			Utils.sendInformation(Main.pathTargetSet.toString());
+			Utils.sendInformation(BauerCamPlugin.pathTargetSet.toString());
 		} else if ("off".equals(op)) {
 			PathHandler.removeTarget();
-			Utils.sendInformation(Main.pathTargetRemoved.toString());
+			Utils.sendInformation(BauerCamPlugin.pathTargetRemoved.toString());
 		} else {
 			throw new CommandException(getDescription(), new Object[0]);
 		}

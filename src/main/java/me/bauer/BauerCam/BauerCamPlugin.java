@@ -2,19 +2,14 @@ package me.bauer.BauerCam;
 
 import java.io.File;
 
-import org.lwjgl.input.Keyboard;
-
+import io.xol.chunkstories.api.client.ClientInterface;
+import io.xol.chunkstories.api.input.Input;
+import io.xol.chunkstories.api.plugin.ClientPlugin;
+import io.xol.chunkstories.api.plugin.PluginInformation;
+import io.xol.chunkstories.content.GameDirectory;
 import me.bauer.BauerCam.Commands.CamCommand;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
-@Mod(modid = Main.modId, version = Main.version, clientSideOnly = true, acceptedMinecraftVersions = Main.minecraftTargetVersion)
-public final class Main {
+public class BauerCamPlugin extends ClientPlugin {
 
 	/**
 	 * Lower case will be required for 1.11 and beyond
@@ -22,42 +17,47 @@ public final class Main {
 	public static final String modId = "bauercam";
 	public static final String name = "BauerCam";
 	public static final String version = "1.12";
-	public static final String minecraftTargetVersion = "1.11";
+	//public static final String minecraftTargetVersion = "1.11";
 
-	public final static KeyBinding point = new KeyBinding("bauercam.key.addPoint", Keyboard.KEY_P, name);
-	public final static KeyBinding fovHigh = new KeyBinding("bauercam.key.fovHigh", Keyboard.KEY_O, name);
-	public final static KeyBinding fovLow = new KeyBinding("bauercam.key.fovLow", Keyboard.KEY_U, name);
-	public final static KeyBinding fovReset = new KeyBinding("bauercam.key.fovReset", Keyboard.KEY_I, name);
-	public final static KeyBinding cameraClock = new KeyBinding("bauercam.key.clockwise", Keyboard.KEY_L, name);
-	public final static KeyBinding cameraCounterClock = new KeyBinding("bauercam.key.counterClockwise", Keyboard.KEY_J,
-			name);
-	public final static KeyBinding cameraReset = new KeyBinding("bauercam.key.reset", Keyboard.KEY_K, name);
+	public static Input point;
+	public static Input fovHigh;
+	public static Input fovLow;
+	public static Input fovReset;
+	public static Input cameraClock;
+	public static Input cameraCounterClock; 
+	public static Input cameraReset;
+	
+	public  static File bauercamDirectory;
 
-	public final static File bauercamDirectory = new File("bauercam");
+	public BauerCamPlugin(PluginInformation pluginInformation, ClientInterface clientInterface) {
+		super(pluginInformation, clientInterface);
+		
+		clientInterface.getInputsManager().getInputByName("bauercam.key.addPoint");
+		
+		point = clientInterface.getInputsManager().getInputByName("bauercam.key.addPoint");
+		fovHigh = clientInterface.getInputsManager().getInputByName("bauercam.key.fovHigh");
+		fovLow = clientInterface.getInputsManager().getInputByName("bauercam.key.fovLow");
+		fovReset = clientInterface.getInputsManager().getInputByName("bauercam.key.fovReset");
+		cameraClock = clientInterface.getInputsManager().getInputByName("bauercam.key.clockwise");
+		cameraCounterClock = clientInterface.getInputsManager().getInputByName("bauercam.key.counterClockwise");
+		cameraReset = clientInterface.getInputsManager().getInputByName("bauercam.key.reset");
 
-	static {
-		if (!bauercamDirectory.isDirectory()) {
-			bauercamDirectory.mkdir();
-		}
+		bauercamDirectory = new File(GameDirectory.getGameFolderPath()+"/bauercam/");
+		bauercamDirectory.mkdirs();
 	}
 
-	@Mod.EventHandler
-	public void init(final FMLInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(EventListener.instance);
-		ClientCommandHandler.instance.registerCommand(new CamCommand());
+	@Override
+	public void onEnable() {
+		this.getPluginManager().registerEventListener(EventListener.instance, this);
+		this.getPluginManager().registerCommandHandler("cam", new CamCommand());
 	}
 
-	@Mod.EventHandler
-	public void postInit(final FMLPostInitializationEvent event) {
-		ClientRegistry.registerKeyBinding(point);
-		ClientRegistry.registerKeyBinding(fovHigh);
-		ClientRegistry.registerKeyBinding(fovLow);
-		ClientRegistry.registerKeyBinding(fovReset);
-		ClientRegistry.registerKeyBinding(cameraClock);
-		ClientRegistry.registerKeyBinding(cameraCounterClock);
-		ClientRegistry.registerKeyBinding(cameraReset);
-	}
+	@Override
+	public void onDisable() {
+		// TODO Auto-generated method stub
 
+	}
+	
 	/**
 	 * Localized strings
 	 */

@@ -1,10 +1,10 @@
 package me.bauer.BauerCam.Commands;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
-import net.minecraft.command.CommandException;
+import me.bauer.BauerCam.compat.CommandException;
 
 public class SubGoto implements ISubCommand {
 
@@ -22,9 +22,9 @@ public class SubGoto implements ISubCommand {
 			}
 			Utils.teleport(pos, true);
 
-			Utils.sendInformation(Main.commandTravelledTo.toString() + (index + 1));
+			Utils.sendInformation(BauerCamPlugin.commandTravelledTo.toString() + (index + 1));
 		} catch (final NumberFormatException e) {
-			throw new CommandException(Main.pathDoesNotExist.toString(), new Object[0]);
+			throw new CommandException(BauerCamPlugin.pathDoesNotExist.toString(), new Object[0]);
 		}
 	}
 

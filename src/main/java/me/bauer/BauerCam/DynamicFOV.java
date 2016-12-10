@@ -1,11 +1,10 @@
 package me.bauer.BauerCam;
 
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.settings.GameSettings.Options;
+import io.xol.chunkstories.client.RenderingConfig;
 
 public final class DynamicFOV {
 
-	private static final GameSettings settings = Utils.mc.gameSettings;
+	//private static final GameSettings settings = Utils.mc.gameSettings;
 
 	/**
 	 * Extends default of {@link Options#FOV#getValueMax()}
@@ -18,38 +17,38 @@ public final class DynamicFOV {
 	/**
 	 * Should be 70
 	 */
-	private static final float defaultFOV = (Options.FOV.getValueMax() + Options.FOV.getValueMin()) / 2;
+	private static final float defaultFOV = 70f;//(Options.FOV.getValueMax() + Options.FOV.getValueMin()) / 2;
 
 	private static final float fovPerKeyPress = 0.25f;
 
 	public static void increase() {
-		settings.fovSetting += fovPerKeyPress;
+		RenderingConfig.fov += fovPerKeyPress;
 		verify();
 	}
 
 	public static void decrease() {
-		settings.fovSetting -= fovPerKeyPress;
+		RenderingConfig.fov -= fovPerKeyPress;
 		verify();
 	}
 
 	public static void reset() {
-		settings.fovSetting = defaultFOV;
+		RenderingConfig.fov = defaultFOV;
 	}
 
 	public static void set(final float fov) {
-		settings.fovSetting = fov;
+		RenderingConfig.fov = fov;
 		verify();
 	}
 
 	public static float get() {
-		return settings.fovSetting;
+		return RenderingConfig.fov;
 	}
 
 	private static void verify() {
-		if (settings.fovSetting > upperBound) {
-			settings.fovSetting = upperBound;
-		} else if (settings.fovSetting < lowerBound) {
-			settings.fovSetting = lowerBound;
+		if (RenderingConfig.fov > upperBound) {
+			RenderingConfig.fov = upperBound;
+		} else if (RenderingConfig.fov < lowerBound) {
+			RenderingConfig.fov = lowerBound;
 		}
 	}
 

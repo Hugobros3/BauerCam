@@ -1,9 +1,9 @@
 package me.bauer.BauerCam.Commands;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
-import net.minecraft.command.CommandException;
+import me.bauer.BauerCam.compat.CommandException;
 
 public class SubReplace implements ISubCommand {
 
@@ -16,13 +16,13 @@ public class SubReplace implements ISubCommand {
 			final int index = Integer.parseInt(args[1]) - 1;
 
 			if (PathHandler.replace(Utils.getPosition(), index)) {
-				Utils.sendInformation(Main.pathReplace.toString() + (index + 1));
+				Utils.sendInformation(BauerCamPlugin.pathReplace.toString() + (index + 1));
 			} else {
-				Utils.sendInformation(Main.pathDoesNotExist.toString());
+				Utils.sendInformation(BauerCamPlugin.pathDoesNotExist.toString());
 			}
 
 		} catch (final NumberFormatException e) {
-			throw new CommandException(Main.pathDoesNotExist.toString(), new Object[0]);
+			throw new CommandException(BauerCamPlugin.pathDoesNotExist.toString(), new Object[0]);
 		}
 	}
 

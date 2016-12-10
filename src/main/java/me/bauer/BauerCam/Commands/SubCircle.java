@@ -1,11 +1,11 @@
 package me.bauer.BauerCam.Commands;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
 import me.bauer.BauerCam.Path.Vector3D;
-import net.minecraft.command.CommandException;
+import me.bauer.BauerCam.compat.CommandException;
 
 public class SubCircle implements ISubCommand {
 
@@ -27,7 +27,7 @@ public class SubCircle implements ISubCommand {
 			throw new CommandException(getDescription(), new Object[0]);
 		}
 		if (PathHandler.getWaypointSize() != 0) {
-			throw new CommandException(Main.pathIsPopulated.toString(), new Object[0]);
+			throw new CommandException(BauerCamPlugin.pathIsPopulated.toString(), new Object[0]);
 		}
 
 		final String direction = args[3].toLowerCase();
@@ -54,7 +54,7 @@ public class SubCircle implements ISubCommand {
 			PathHandler.addWaypoint(new Position(playerPos.x + rootPoint.x * radius, playerPos.y,
 					playerPos.z + rootPoint.z * radius, playerPos.pitch, playerPos.yaw, playerPos.roll, playerPos.fov));
 
-			Utils.sendInformation(Main.pathCircleCreated.toString());
+			Utils.sendInformation(BauerCamPlugin.pathCircleCreated.toString());
 		} catch (final NumberFormatException e) {
 			throw new CommandException(getDescription(), new Object[0]);
 		}

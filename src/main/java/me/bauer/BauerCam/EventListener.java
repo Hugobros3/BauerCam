@@ -1,7 +1,11 @@
 package me.bauer.BauerCam;
 
-import org.lwjgl.opengl.GL11;
-
+import io.xol.chunkstories.api.events.EventHandler;
+import io.xol.chunkstories.api.events.Listener;
+import io.xol.chunkstories.core.events.CameraSetupEvent;
+import io.xol.chunkstories.core.events.ClientInputPressedEvent;
+import io.xol.chunkstories.core.events.WorldPostRenderingEvent;
+import io.xol.chunkstories.core.events.WorldTickEvent;
 import me.bauer.BauerCam.Interpolation.CubicInterpolator;
 import me.bauer.BauerCam.Interpolation.IAdditionalAngleInterpolator;
 import me.bauer.BauerCam.Interpolation.IPolarCoordinatesInterpolator;
@@ -9,16 +13,8 @@ import me.bauer.BauerCam.Interpolation.Interpolator;
 import me.bauer.BauerCam.Path.IPathChangeListener;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
-public final class EventListener implements IPathChangeListener {
+public final class EventListener implements Listener, IPathChangeListener {
 
 	public static final EventListener instance = new EventListener();
 	/**
@@ -71,13 +67,15 @@ public final class EventListener implements IPathChangeListener {
 		}
 	}
 
-	@SubscribeEvent
-	public void onRender(final RenderWorldLastEvent e) {
+	@EventHandler
+	public void onRender(final WorldPostRenderingEvent e) {
 		if (this.previewPoints == null || !PathHandler.showPreview()) {
 			return;
 		}
 
-		final Entity renderEntity = Utils.mc.getRenderViewEntity();
+		//TODO When the basic thing works, make a proper line renderer ( ChunkStories uses OpenGL Core 3.x+ with an in-house abstraction layer )
+		
+		/*final Entity renderEntity = Utils.mc.getRenderViewEntity();
 		final float partial = e.getPartialTicks();
 		final double renderX = renderEntity.lastTickPosX + (renderEntity.posX - renderEntity.lastTickPosX) * partial;
 		final double renderY = renderEntity.lastTickPosY + (renderEntity.posY - renderEntity.lastTickPosY) * partial;
@@ -104,66 +102,76 @@ public final class EventListener implements IPathChangeListener {
 		GL11.glEnd();
 
 		GlStateManager.popAttrib();
-		GlStateManager.popMatrix();
+		GlStateManager.popMatrix();*/
+		
+		//Moved from the other event handler
+		PathHandler.tick();
 	}
 
-	@SubscribeEvent
-	public void onKeyInput(final KeyInputEvent e) {
+	@EventHandler
+	public void onKeyInput(final ClientInputPressedEvent e) {
 		if (PathHandler.isTravelling()) {
 			return;
 		}
 
-		if (Main.point.isPressed()) {
+		if (BauerCamPlugin.point.isPressed()) {
 			final Position playerPos = Utils.getPosition();
 			PathHandler.addWaypoint(playerPos);
-			Utils.sendInformation(Main.pathAdd.toString() + PathHandler.getWaypointSize());
+			Utils.sendInformation(BauerCamPlugin.pathAdd.toString() + PathHandler.getWaypointSize());
 		}
 
-		if (Main.cameraReset.isPressed()) {
+		if (BauerCamPlugin.cameraReset.isPressed()) {
 			CameraRoll.reset();
 		}
 
-		if (Main.fovReset.isPressed()) {
+		if (BauerCamPlugin.fovReset.isPressed()) {
 			DynamicFOV.reset();
 		}
 	}
 
-	@SubscribeEvent
-	public void onTick(final ClientTickEvent e) {
+	@EventHandler
+	public void onTick(final WorldTickEvent e) {
 		if (PathHandler.isTravelling()) {
 			return;
 		}
 
-		if (Main.cameraClock.isKeyDown()) {
+		if (BauerCamPlugin.cameraClock.isPressed()) {
 			CameraRoll.rotateClockWise();
 		}
 
-		if (Main.cameraCounterClock.isKeyDown()) {
+		if (BauerCamPlugin.cameraCounterClock.isPressed()) {
 			CameraRoll.rotateCounterClockWise();
 		}
 
-		if (Main.fovHigh.isKeyDown()) {
+		if (BauerCamPlugin.fovHigh.isPressed()) {
 			DynamicFOV.increase();
 		}
 
-		if (Main.fovLow.isKeyDown()) {
+		if (BauerCamPlugin.fovLow.isPressed()) {
 			DynamicFOV.decrease();
 		}
 	}
 
-	@SubscribeEvent
+	/*@EventHandler
 	public void onRender(final RenderTickEvent e) {
-		PathHandler.tick();
-	}
+		//Moved to WorldPostRenderingEvent ;
+		//Why was there two seperate events in the first place ? Are RenderingTickEvents not the same frequency as RenderWorldLastEvents in Forge ?
+		
+		//PathHandler.tick();
+	}*/
 
-	@SubscribeEvent
-	public void onOrientCamera(final EntityViewRenderEvent.CameraSetup e) {
+	@EventHandler
+	public void onOrientCamera(final CameraSetupEvent e) {
 		// Do not explicitly set roll to 0 (when the player is hurt for example
 		// minecraft uses roll)
 		if (CameraRoll.roll == 0) {
-			return;
+			//return; don't mess with this for now, we want the roll to stop when we're done
 		}
-		e.setRoll(CameraRoll.roll);
+		
+		//Janky-ass job of going straight into the implementation quircks instead of proper abstraction
+		e.getCamera().rotationZ = CameraRoll.roll;
+		
+		//e.setRoll(CameraRoll.roll);
 	}
 
 }

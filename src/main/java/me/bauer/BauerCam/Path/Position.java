@@ -1,6 +1,6 @@
 package me.bauer.BauerCam.Path;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 
 public final class Position extends Vector3D {
@@ -25,7 +25,7 @@ public final class Position extends Vector3D {
 	}
 
 	public static Position fromString(final String input) {
-		final String error = Main.positionCannotBeParsed + input;
+		final String error = BauerCamPlugin.positionCannotBeParsed + input;
 
 		final String[] parts = input.split(padding);
 		if (parts.length != 7) {

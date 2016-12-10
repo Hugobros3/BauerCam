@@ -1,7 +1,5 @@
 package me.bauer.BauerCam;
 
-import net.minecraft.client.resources.I18n;
-
 /**
  * Use this class via {@link Object#toString()}
  */
@@ -18,7 +16,9 @@ public final class LocalizedString {
 
 	@Override
 	public String toString() {
-		return I18n.format(this.key);
+		return key; //I18n.format(this.key);
+		
+		//No localization support yet in ChunkStories, porting work will be done once there is
 	}
 
 }

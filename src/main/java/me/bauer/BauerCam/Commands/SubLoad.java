@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
@@ -16,10 +16,10 @@ public class SubLoad extends ASubExportImport {
 
 	@Override
 	protected void derivedExecute(final String filename) {
-		final File file = new File(Main.bauercamDirectory, filename + extension);
+		final File file = new File(BauerCamPlugin.bauercamDirectory, filename + extension);
 
 		if (!file.isFile()) {
-			Utils.sendInformation(Main.fileDoesNotExist.toString());
+			Utils.sendInformation(BauerCamPlugin.fileDoesNotExist.toString());
 			return;
 		}
 
@@ -40,9 +40,9 @@ public class SubLoad extends ASubExportImport {
 			}
 
 			PathHandler.setWaypoints(points);
-			Utils.sendInformation(Main.importSuccessful.toString());
+			Utils.sendInformation(BauerCamPlugin.importSuccessful.toString());
 		} catch (final IOException e) {
-			Utils.sendInformation(Main.IOError.toString());
+			Utils.sendInformation(BauerCamPlugin.IOError.toString());
 			Utils.sendInformation(e.getMessage());
 		}
 

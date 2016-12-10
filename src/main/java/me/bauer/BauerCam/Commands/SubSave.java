@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import me.bauer.BauerCam.Main;
+import me.bauer.BauerCam.BauerCamPlugin;
 import me.bauer.BauerCam.Utils;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
@@ -17,14 +17,14 @@ public class SubSave extends ASubExportImport {
 	protected void derivedExecute(final String filename) {
 		final Position[] points = PathHandler.getWaypoints();
 		if (points.length == 0) {
-			Utils.sendInformation(Main.pathIsEmpty.toString());
+			Utils.sendInformation(BauerCamPlugin.pathIsEmpty.toString());
 			return;
 		}
 
-		final File file = new File(Main.bauercamDirectory, filename + extension);
+		final File file = new File(BauerCamPlugin.bauercamDirectory, filename + extension);
 
 		if (file.isFile()) {
-			Utils.sendInformation(Main.fileAlreadyExists.toString());
+			Utils.sendInformation(BauerCamPlugin.fileAlreadyExists.toString());
 			return;
 		}
 
@@ -38,9 +38,9 @@ public class SubSave extends ASubExportImport {
 				writer.newLine();
 			}
 
-			Utils.sendInformation(Main.exportSuccessful + file.getAbsolutePath());
+			Utils.sendInformation(BauerCamPlugin.exportSuccessful + file.getAbsolutePath());
 		} catch (final IOException e) {
-			Utils.sendInformation(Main.IOError.toString());
+			Utils.sendInformation(BauerCamPlugin.IOError.toString());
 			Utils.sendInformation(e.getMessage());
 		}
 
