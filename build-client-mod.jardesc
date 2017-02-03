@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="BauerCam/res/bauercam-client.jar"/>
+    <jar path="BauerCam/bauercam-client.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/BauerCam/build-client-mod.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -11,9 +11,8 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <folder path="/BauerCam/res"/>
         <file path="/BauerCam/src/main/resources/plugin.info"/>
-        <javaElement handleIdentifier="=BauerCam/src\/main\/resources&lt;assets.bauercam.lang"/>
         <javaElement handleIdentifier="=BauerCam/src\/main\/java"/>
+        <project name="BauerCam"/>
     </selectedElements>
 </jardesc>

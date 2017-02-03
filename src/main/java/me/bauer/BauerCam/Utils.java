@@ -4,7 +4,7 @@ import io.xol.chunkstories.api.Location;
 import io.xol.chunkstories.api.client.ClientInterface;
 import io.xol.chunkstories.api.entity.interfaces.EntityControllable;
 import io.xol.chunkstories.api.entity.interfaces.EntityRotateable;
-import io.xol.engine.math.lalgb.Vector3d;
+import io.xol.engine.math.lalgb.vector.dp.Vector3dm;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
 
@@ -31,11 +31,11 @@ public final class Utils {
 	 */
 	public static Position getPosition() {
 
-		Vector3d playerLocation = new Vector3d(0.0);
+		Vector3dm playerLocation = new Vector3dm(0.0);
 		float rotationX = 0.0f;
 		float rotationY = 0.0f;
 
-		EntityControllable entity = client.getClientSideController().getControlledEntity();
+		EntityControllable entity = client.getPlayer().getControlledEntity();
 		if (entity != null) {
 			playerLocation = entity.getLocation();
 			if(entity instanceof EntityRotateable)
@@ -60,7 +60,7 @@ public final class Utils {
 	 */
 	public static void teleport(final Position pos, final boolean force) {
 		if (verify()) {
-			final EntityControllable player = client.getClientSideController().getControlledEntity();
+			final EntityControllable player = client.getPlayer().getControlledEntity();
 			// force tackles desync
 			
 			//CS port notice: useless as CS doesn't do any movements checks for now
@@ -119,7 +119,7 @@ public final class Utils {
 	}
 
 	private static boolean verify() {
-		if (client.getClientSideController().getControlledEntity() == null) {
+		if (client.getPlayer().getControlledEntity() == null) {
 			PathHandler.stopTravelling();
 			return false;
 		}

@@ -19,7 +19,7 @@ public class SubTarget implements ISubCommand {
 		final String op = args[1].toLowerCase();
 
 		if ("set".equals(op)) {
-			final EntityControllable player = Utils.client.getClientSideController().getControlledEntity();
+			final EntityControllable player = Utils.client.getPlayer().getControlledEntity();
 			Location loc = player.getLocation();
 			final Vector3D target = new Vector3D(loc.getX(), loc.getY(), loc.getZ());
 			PathHandler.setTarget(target);

@@ -16,7 +16,7 @@ public final class LocalizedString {
 
 	@Override
 	public String toString() {
-		return key; //I18n.format(this.key);
+		return "#{"+key+"}"; //I18n.format(this.key);
 		
 		//No localization support yet in ChunkStories, porting work will be done once there is
 	}
