@@ -1,6 +1,6 @@
 package me.bauer.BauerCam.Commands;
 
-import io.xol.chunkstories.api.entity.PlayerClient;
+import io.xol.chunkstories.api.player.PlayerClient;
 import io.xol.chunkstories.api.plugin.commands.Command;
 import io.xol.chunkstories.api.plugin.commands.CommandEmitter;
 import io.xol.chunkstories.api.plugin.commands.CommandHandler;

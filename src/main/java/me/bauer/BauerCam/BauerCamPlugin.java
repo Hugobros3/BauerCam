@@ -6,7 +6,6 @@ import io.xol.chunkstories.api.client.ClientInterface;
 import io.xol.chunkstories.api.input.Input;
 import io.xol.chunkstories.api.plugin.ClientPlugin;
 import io.xol.chunkstories.api.plugin.PluginInformation;
-import io.xol.chunkstories.content.GameDirectory;
 import me.bauer.BauerCam.Commands.CamCommand;
 
 public class BauerCamPlugin extends ClientPlugin {
@@ -42,8 +41,8 @@ public class BauerCamPlugin extends ClientPlugin {
 		cameraCounterClock = clientInterface.getInputsManager().getInputByName("bauercam.key.counterClockwise");
 		cameraReset = clientInterface.getInputsManager().getInputByName("bauercam.key.reset");
 
-		bauercamDirectory = new File(GameDirectory.getGameFolderPath()+"/bauercam/");
-		bauercamDirectory.mkdirs();
+		bauercamDirectory = pluginInformation.getDirectory();//new File(GameDirectory.getGameFolderPath()+"/bauercam/");
+		//bauercamDirectory.mkdirs();
 		
 		Utils.setup(this);
 	}

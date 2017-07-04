@@ -4,7 +4,7 @@ import io.xol.chunkstories.api.Location;
 import io.xol.chunkstories.api.client.ClientInterface;
 import io.xol.chunkstories.api.entity.interfaces.EntityControllable;
 import io.xol.chunkstories.api.entity.interfaces.EntityRotateable;
-import io.xol.engine.math.lalgb.vector.dp.Vector3dm;
+import io.xol.chunkstories.api.math.vector.dp.Vector3dm;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
 

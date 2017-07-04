@@ -2,10 +2,11 @@ package me.bauer.BauerCam;
 
 import io.xol.chunkstories.api.events.EventHandler;
 import io.xol.chunkstories.api.events.Listener;
-import io.xol.chunkstories.core.events.CameraSetupEvent;
-import io.xol.chunkstories.core.events.ClientInputPressedEvent;
-import io.xol.chunkstories.core.events.WorldPostRenderingEvent;
-import io.xol.chunkstories.core.events.WorldTickEvent;
+import io.xol.chunkstories.api.events.client.ClientInputPressedEvent;
+import io.xol.chunkstories.api.events.rendering.CameraSetupEvent;
+import io.xol.chunkstories.api.events.rendering.WorldPostRenderingEvent;
+import io.xol.chunkstories.api.events.world.WorldTickEvent;
+import io.xol.chunkstories.renderer.Camera;
 import me.bauer.BauerCam.Interpolation.CubicInterpolator;
 import me.bauer.BauerCam.Interpolation.IAdditionalAngleInterpolator;
 import me.bauer.BauerCam.Interpolation.IPolarCoordinatesInterpolator;
@@ -172,7 +173,7 @@ public final class EventListener implements Listener, IPathChangeListener {
 		}
 		
 		//Janky-ass job of going straight into the implementation quircks instead of proper abstraction
-		e.getCamera().rotationZ = CameraRoll.roll;
+		((Camera)e.getCamera()).rotationZ = CameraRoll.roll;
 		
 		//e.setRoll(CameraRoll.roll);
 	}
