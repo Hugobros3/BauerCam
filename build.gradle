@@ -31,14 +31,9 @@ dependencies {
 }
 
 task mod(type: Zip) {
-	//dependsOn(jar)
+	//dependsOn(jar) //It figures it out on it's own apparently, this build system is cleverer than me :(
     from 'res/'
-    //from 'build/libs/BauerCam.jar'
-    //into('lel') {
-        from configurations.runtime.allArtifacts.files
-    //}
-	
-	
+    from configurations.runtime.allArtifacts.files
 }
 
 task artifacts {
