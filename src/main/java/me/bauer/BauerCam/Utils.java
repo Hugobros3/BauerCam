@@ -1,10 +1,11 @@
 package me.bauer.BauerCam;
 
+import org.joml.Vector3d;
+
 import io.xol.chunkstories.api.Location;
 import io.xol.chunkstories.api.client.ClientInterface;
 import io.xol.chunkstories.api.entity.interfaces.EntityControllable;
 import io.xol.chunkstories.api.entity.interfaces.EntityRotateable;
-import io.xol.chunkstories.api.math.vector.dp.Vector3dm;
 import me.bauer.BauerCam.Path.PathHandler;
 import me.bauer.BauerCam.Path.Position;
 
@@ -31,7 +32,7 @@ public final class Utils {
 	 */
 	public static Position getPosition() {
 
-		Vector3dm playerLocation = new Vector3dm(0.0);
+		Vector3d playerLocation = new Vector3d(0.0);
 		float rotationX = 0.0f;
 		float rotationY = 0.0f;
 
@@ -47,7 +48,7 @@ public final class Utils {
 		}
 
 		// final EntityPlayerSP player = mc.thePlayer;
-		return new Position(playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), rotationX,
+		return new Position(playerLocation.x(), playerLocation.y(), playerLocation.z(), rotationX,
 				rotationY, CameraRoll.roll, DynamicFOV.get());
 	}
 

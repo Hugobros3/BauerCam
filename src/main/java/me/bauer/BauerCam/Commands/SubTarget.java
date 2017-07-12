@@ -21,7 +21,7 @@ public class SubTarget implements ISubCommand {
 		if ("set".equals(op)) {
 			final EntityControllable player = Utils.client.getPlayer().getControlledEntity();
 			Location loc = player.getLocation();
-			final Vector3D target = new Vector3D(loc.getX(), loc.getY(), loc.getZ());
+			final Vector3D target = new Vector3D(loc.x(), loc.y(), loc.z());
 			PathHandler.setTarget(target);
 			Utils.sendInformation(BauerCamPlugin.pathTargetSet.toString());
 		} else if ("off".equals(op)) {
