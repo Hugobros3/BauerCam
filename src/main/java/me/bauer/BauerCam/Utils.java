@@ -44,6 +44,8 @@ public final class Utils {
 				EntityRotateable erot = (EntityRotateable)entity;
 				rotationX = erot.getEntityRotationComponent().getHorizontalRotation();
 				rotationY = erot.getEntityRotationComponent().getVerticalRotation();
+				
+				System.out.println(rotationX + ": "+rotationY);
 			}
 		}
 
@@ -106,8 +108,8 @@ public final class Utils {
 		{
 			EntityRotateable erot = (EntityRotateable)entity;
 			
-			System.out.println(pos.yaw+":"+pos.pitch);
-			erot.getEntityRotationComponent().setRotation(180+pos.yaw, pos.pitch);
+			//System.out.println(pos.yaw+":"+pos.pitch);
+			erot.getEntityRotationComponent().setRotation(pos.pitch, pos.yaw);
 		}
 		//entity.setLocationAndAngles(pos.x, pos.y, pos.z, pos.yaw, pos.pitch);
 		

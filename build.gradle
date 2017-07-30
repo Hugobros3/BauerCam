@@ -24,10 +24,10 @@ jar {
 }
 	
 dependencies {
-	compile group: 'io.xol.chunkstories', name: 'api', version: '108'
+	compile group: 'io.xol.chunkstories', name: 'api', version: '109'
 	
-	//Uses a nightly build, the first one in the repo actually, just to get things going
-	compile group: 'io.xol.chunkstories', name: 'client', version: '2017.07.12'
+	//Compiled against client directly too
+	compile group: 'io.xol.chunkstories', name: 'client', version: 'Alpha1.0rc2'
 }
 
 task mod(type: Zip) {

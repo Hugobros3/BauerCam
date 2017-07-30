@@ -1,11 +1,13 @@
 package me.bauer.BauerCam;
 
+import io.xol.chunkstories.api.client.ClientInterface;
 import io.xol.chunkstories.api.events.EventHandler;
 import io.xol.chunkstories.api.events.Listener;
 import io.xol.chunkstories.api.events.client.ClientInputPressedEvent;
 import io.xol.chunkstories.api.events.rendering.CameraSetupEvent;
 import io.xol.chunkstories.api.events.rendering.WorldPostRenderingEvent;
 import io.xol.chunkstories.api.events.world.WorldTickEvent;
+import io.xol.chunkstories.gui.Ingame;
 import io.xol.chunkstories.renderer.Camera;
 import me.bauer.BauerCam.Interpolation.CubicInterpolator;
 import me.bauer.BauerCam.Interpolation.IAdditionalAngleInterpolator;
@@ -109,7 +111,7 @@ public final class EventListener implements Listener, IPathChangeListener {
 		GlStateManager.popMatrix();*/
 		
 		//Moved from the other event handler
-		PathHandler.tick();
+		//PathHandler.tick();
 	}
 
 	@EventHandler
@@ -117,18 +119,24 @@ public final class EventListener implements Listener, IPathChangeListener {
 		if (PathHandler.isTravelling()) {
 			return;
 		}
+		
+		if(!((e.getClient()).getGameWindow().getLayer() instanceof Ingame))
+			return;
+			
+		if(!((Ingame)(e.getClient()).getGameWindow().getLayer()).hasFocus())
+			return;
 
-		if (BauerCamPlugin.point.isPressed()) {
+		if (BauerCamPlugin.point.isPressed() || e.getInput().equals(BauerCamPlugin.point)) {
 			final Position playerPos = Utils.getPosition();
 			PathHandler.addWaypoint(playerPos);
 			Utils.sendInformation(BauerCamPlugin.pathAdd.toString() + PathHandler.getWaypointSize());
 		}
 
-		if (BauerCamPlugin.cameraReset.isPressed()) {
+		if (BauerCamPlugin.cameraReset.isPressed() || e.getInput().equals(BauerCamPlugin.cameraReset)) {
 			CameraRoll.reset();
 		}
 
-		if (BauerCamPlugin.fovReset.isPressed()) {
+		if (BauerCamPlugin.fovReset.isPressed() || e.getInput().equals(BauerCamPlugin.fovReset)) {
 			DynamicFOV.reset();
 		}
 	}
@@ -136,8 +144,15 @@ public final class EventListener implements Listener, IPathChangeListener {
 	@EventHandler
 	public void onTick(final WorldTickEvent e) {
 		if (PathHandler.isTravelling()) {
+			PathHandler.tick();
 			return;
 		}
+
+		if(!(((ClientInterface)e.getWorld().getGameContext()).getGameWindow().getLayer() instanceof Ingame))
+			return;
+			
+		if(!((Ingame)((ClientInterface)e.getWorld().getGameContext()).getGameWindow().getLayer()).hasFocus())
+			return;
 
 		if (BauerCamPlugin.cameraClock.isPressed()) {
 			CameraRoll.rotateClockWise();
